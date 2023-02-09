@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.charactersResults$ = this.searchTermByCharacters.pipe(
       // YOUR CODE STARTS HERE
       map((value: string) => value.trim()),
-      filter((value: string) => value.length === 3),
+      filter((value: string) => value.length > 2),
       debounceTime(500),
       distinctUntilChanged(),
       switchMap((charactersResults) =>
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.mockDataService.getPlatents(),
       this.mockDataService.getCharacters(),
     ]).pipe(
-      map((data) => data.reduce((result, arr) => [...result, ...arr], []))
+      map(([characters, planets]: string[]) => [...characters, ...planets])
     );
 
     // YOUR CODE ENDS HERE
